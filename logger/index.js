@@ -31,7 +31,6 @@ module.exports.getLogger = function(config) {
         exceptionHandlers: [],
         rewriters: [function(level, msg, meta) {
             meta.NODE_ENV = process.env.NODE_ENV
-
             return meta;
         }],
     };
