@@ -1,29 +1,32 @@
 var express = require('express'),
+    expressWinston = require('express-winston'),
     config = require("./config/config"),
     app = express();
 
 global.logger = require('./logger').getLogger(config.get('log'));
 
-app.get('/', function(req, res) {
+
+app.use(expressWinston.logger({
+    winstonInstance: logger,
+    meta: true,
+    msg: "HTTP {{req.method}} {{req.baseUrl}}{{req.path}} {{res.statusCode}} {{res.responseTime}}ms",
+    statusLevels: true
+}));
+
+app.get('/200', function(req, res) {
     res.status(200).json({
         command: 'GET /',
-        response: 'OK',
-        interfaces: require('child_process').execSync("ifconfig | grep inet | grep -v inet6 | awk '{gsub(/addr:/,\"\");print $2}'").toString().trim().split("\n")
+        response: 'OK'
+    });
+});
+
+app.get('/500', function(req, res, next) {
+    res.status(500).json({
+        command: 'GET /500',
+        response: 'NOT OK'
     });
 });
 
 app.listen(config.get('port'), function() {
-
-    logger.info('Example app listening on port %s!', config.get('port'), {
-        meta0: {
-            ww1: "ww1",
-            meta1: {
-                ww2: "ww2",
-                meta2: {
-                    ww3: "ww3",
-                    meta3: "yes"
-                }
-            }
-        }
-    });
+    logger.info('Example app listening on port %s!', config.get('port'));
 });

@@ -5,6 +5,6 @@ WORKDIR /code/api
 ADD . /code/api
 RUN npm install
 
-EXPOSE  80
+EXPOSE  8080
 
 CMD ["node", "index.js"]
