@@ -4,6 +4,15 @@ var winston = require('winston'),
     path = require('path'),
     fs = require('fs');
 
+var CONSOLE_OPTIONS = {
+    humanReadableUnhandledException: false,
+    colorize: false,
+    timestamp: true,
+    json: true,
+    stringify: true,
+    prettyPrint: true
+};
+
 var logger;
 
 module.exports.getLogger = function(config) {
@@ -19,7 +28,12 @@ module.exports.getLogger = function(config) {
     // prepare options
     var options = {
         transports: [],
-        exceptionHandlers: []
+        exceptionHandlers: [],
+        rewriters: [function(level, msg, meta) {
+            meta.NODE_ENV = process.env.NODE_ENV
+
+            return meta;
+        }],
     };
 
     // exception logging
@@ -48,20 +62,14 @@ module.exports.getLogger = function(config) {
             }));
         }
         if (type == 'Console') {
-            options.transports.push(new winston.transports.Console({
-                humanReadableUnhandledException: true,
-                colorize: true
-            }));
+            options.transports.push(new winston.transports.Console(CONSOLE_OPTIONS));
         }
     });
 
     // configured exceptionHandlers
     config.exceptionHandlers && config.exceptionHandlers.forEach(function(type) {
         if (type == 'Console') {
-            options.exceptionHandlers.push(new winston.transports.Console({
-                humanReadableUnhandledException: true,
-                colorize: true
-            }));
+            options.exceptionHandlers.push(new winston.transports.Console(CONSOLE_OPTIONS));
         }
     });
 

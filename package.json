@@ -10,11 +10,11 @@
         "type": "git",
         "url": "https://github.com/waleedsamy/hello-world-expressjs-docker.git"
     },
-    "author": "",
+    "author": "waleed samy <waleedsamy634@gmail.com>",
     "license": "ISC",
     "dependencies": {
         "express": "^4.14.0",
         "nconf": "^0.8.4",
-        "winston": "~1.0.1"
+        "winston": "^2.2.0"
     }
 }

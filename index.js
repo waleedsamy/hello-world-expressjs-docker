@@ -12,6 +12,18 @@ app.get('/', function(req, res) {
     });
 });
 
-app.listen(80, function() {
-    logger.info('Example app listening on port 80!');
+app.listen(config.get('port'), function() {
+
+    logger.info('Example app listening on port %s!', config.get('port'), {
+        meta0: {
+            ww1: "ww1",
+            meta1: {
+                ww2: "ww2",
+                meta2: {
+                    ww3: "ww3",
+                    meta3: "yes"
+                }
+            }
+        }
+    });
 });
