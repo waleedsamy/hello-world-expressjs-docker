@@ -1,10 +1,13 @@
 FROM mhart/alpine-node
 
-RUN mkdir -p /code/api
-WORKDIR /code/api
-ADD . /code/api
+ADD . /src
+
+WORKDIR /src
+
 RUN npm install
 
 EXPOSE  8080
+
+ENV NODE_ENV development
 
 CMD ["node", "index.js"]
