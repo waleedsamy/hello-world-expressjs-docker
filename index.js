@@ -1,17 +1,11 @@
 var express = require('express'),
-    expressWinston = require('express-winston'),
-    config = require("./config/config"),
+    xRequestId  = require('exwml').XRequestId,
+    expressWinston = require('exwml').expressWinston,
     app = express();
 
-global.logger = require('./logger').getLogger(config.get('log'));
 
-
-app.use(expressWinston.logger({
-    winstonInstance: logger,
-    meta: true,
-    msg: "HTTP {{req.method}} {{req.baseUrl}}{{req.path}} {{res.statusCode}} {{res.responseTime}}ms",
-    statusLevels: true
-}));
+app.use(expressWinston());
+app.use(xRequestId());
 
 app.get('/200', function(req, res) {
     res.status(200).json({
@@ -27,6 +21,6 @@ app.get('/500', function(req, res, next) {
     });
 });
 
-app.listen(config.get('port'), function() {
-    logger.info('Example app listening on port %s!', config.get('port'));
+app.listen(8080, function() {
+    logger.info('Example app listening on port %s!', 8080);
 });

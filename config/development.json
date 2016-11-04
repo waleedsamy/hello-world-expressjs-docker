@@ -1,6 +1,0 @@
-{
-    "log": {
-        "transports": ["Console"],
-        "exceptionHandlers": ["Console"]
-    }
-}
