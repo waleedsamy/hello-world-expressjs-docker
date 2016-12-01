@@ -6,7 +6,8 @@ Hello world express sample, return `Hello World!` when calling `127.0.0.1:8080/`
 * run
 
  ```bash
-  docker run -d -P waleedsamy/hello-world-expressjs-docker
+  # docker run --log-driver=fluentd --name hwed -d -p 8080:8080 waleedsamy/hello-world-expressjs-docker
+  $ docker run --name hwed -d -p 8080:8080 waleedsamy/hello-world-expressjs-docker
  ```
 
 #### changes
